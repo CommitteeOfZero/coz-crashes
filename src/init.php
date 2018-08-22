@@ -2,10 +2,14 @@
 
 // This code is shared between web interface and cron tasks
 
-require __DIR__ . '/../vendor/autoload.php';
+define('COZCRASHES_BASE', __DIR__ . '/..');
+date_default_timezone_set('UTC');
+setlocale (LC_ALL, 'en_US');
+
+require COZCRASHES_BASE . '/vendor/autoload.php';
 
 // Instantiate the app
-$config = require __DIR__ . '/../config.php';
+$config = require COZCRASHES_BASE . '/config.php';
 $app = new \Slim\App([
     'settings' => $config['slim']
 ]);
@@ -14,7 +18,7 @@ $container = $app->getContainer();
 $container['config'] = $config;
 // Register Twig View helper
 $container['view'] = function ($c) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/../templates/', [
+    $view = new \Slim\Views\Twig(COZCRASHES_BASE . '/templates/', [
         'cache' => false
     ]);
     
@@ -31,4 +35,7 @@ $container['validator'] = function () {
 $container['db'] = function ($c) {
     $connection = new \Pixie\Connection('mysql', $c->config['db']);
     return new \Pixie\QueryBuilder\QueryBuilderHandler($connection);
+};
+$container['webhook'] = function ($c) {
+    return new \CoZCrashes\Webhook($c);
 };

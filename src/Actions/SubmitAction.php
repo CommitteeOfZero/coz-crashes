@@ -51,6 +51,7 @@ class SubmitAction extends \CoZCrashes\Base {
             $rvaStart = '$';
         }
 
+        // Insert into database
         $data = [
             'guid' => $this->c->db->raw('UNHEX(?)', $dbguid),
             'product' => $params['appname'],
@@ -70,7 +71,36 @@ class SubmitAction extends \CoZCrashes\Base {
         if (!empty($params['emailfrom'])) $data['email'] = $params['emailfrom'];
         if (!empty($params['description'])) $data['usercomment'] = $params['description'];
         $this->c->db->table('reports')->insert($data);
-        $request->getUploadedFiles()['crashrpt']->moveTo(__DIR__ . '/../uploads/' . $params['crashguid'] . '.zip');
+
+        // Save file
+        $request->getUploadedFiles()['crashrpt']->moveTo(COZCRASHES_BASE . '/uploads/' . $params['crashguid'] . '.zip');
+
+        // Post Discord notification
+        // First get RVA from DB again...
+        $exceptionRvaStr = $this->c->db->table('reports')
+            ->select('exception_rva')
+            ->where('guid', '=', $this->c->db->raw('UNHEX(?)', $dbguid))
+            ->first()->exception_rva;
+        $this->c->webhook->send([
+            'embeds' => [
+                [
+                    'title' => 'Crash in ' . $params['appname'],
+                    'description' => $params['appversion'],
+                    'url' => 'https://example.com',
+                    'fields' => [
+                        [
+                            'name' => 'RVA',
+                            'value' => $exceptionRvaStr
+                        ],
+                        [
+                            'name' => 'Reported at',
+                            'value' => date($this->c->config['app']['timestampFormat'])
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
         return $response->withStatus(200);
     }
 }
