@@ -44,6 +44,8 @@ $container['auth'] = function ($c) {
     return new \CoZCrashes\Auth($c);
 };
 
+require_once COZCRASHES_BASE . '/src/util.php';
+
 // Slim likes to overwrite this with nothing when starting dispatch
 // so for web accesses we set it again before any real middleware runs
 $app->add(function ($request, $response, $next) {
