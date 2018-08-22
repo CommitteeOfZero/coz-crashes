@@ -1,0 +1,21 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/drdaxxy/pixie"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.1",
+        "slim/twig-view": "^2.4",
+        "twbs/bootstrap": "^4.1",
+        "components/jquery": "^3.3",
+        "rakit/validation": "^0.18.0",
+        "usmanhalalit/pixie": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "CoZCrashes\\": "src"
+        }
+    }
+}
