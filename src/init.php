@@ -40,6 +40,9 @@ $container['db'] = function ($c) {
 $container['webhook'] = function ($c) {
     return new \CoZCrashes\Webhook($c);
 };
+$container['auth'] = function ($c) {
+    return new \CoZCrashes\Auth($c);
+};
 
 // Slim likes to overwrite this with nothing when starting dispatch
 // so for web accesses we set it again before any real middleware runs

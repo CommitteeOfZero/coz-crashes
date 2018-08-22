@@ -11,6 +11,20 @@ $app->redirect('/', '/gdpr', 308);
 // admin area
 //
 
+$forAuthed = new Middleware\AuthMiddleware($container);
+$forUnauthed = new Middleware\UnauthMiddleware($container);
+
+// Static login page
+$app->get('/admin/login', Actions\AdminLoginAction::class)->setName('adminLogin')->add($forUnauthed);
+
+// OAuth process
+$app->any('/admin/authenticate/{provider}', Actions\AdminAuthenticateAction::class)->setName('adminAuthenticate')->add($forUnauthed);
+// Admin index (list all reports)
+$app->get('/admin', function ($request, $response, $args) {
+    // dummy
+})->setName('adminHome')->add($forAuthed);
+
+// View report details
 $app->get('/admin/view/{id}', function ($request, $response, $args) {
     // dummy
-})->setName('adminView');
+})->setName('adminView')->add($forAuthed);

@@ -1,0 +1,7 @@
+{% extends 'layout.twig' %}
+{% block title %}CoZ Crash Reports{% endblock %}
+{% block content %}
+    <div class='text-center'>
+        <h1>Please <a href='{{ path_for('adminAuthenticate', { 'provider': 'discord' }) }}'><b>log in</b></a>.</h1>
+    </div>
+{% endblock %}

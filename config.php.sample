@@ -20,5 +20,12 @@ return [
         'discordWebhookUrl' => '',
         'timestampFormat' => 'F j, Y H:i:s',
         'baseUrl' => 'https://base/url'
+    ],
+    'oauth' => [
+        'discord' => [
+            'clientId' => '',
+            'clientSecret' => '',
+            'redirectUri' => 'https://base/url/admin/authenticate/discord'
+        ]
     ]
 ];
