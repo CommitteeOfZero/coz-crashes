@@ -15,6 +15,7 @@ return [
     'app' => [
         'submitLimitHours' => 6,
         'submitLimitSubmissions' => 5,
+        'storageLimitDays' => 60,
         'maxFileSize' => '80M',
         'discordWebhookUrl' => '',
         'timestampFormat' => 'F j, Y H:i:s',
