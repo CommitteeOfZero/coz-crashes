@@ -16,6 +16,7 @@ $app = new \Slim\App([
 
 $container = $app->getContainer();
 $container['config'] = $config;
+$container->router->setBasePath($config['app']['baseUrl']);
 // Register Twig View helper
 $container['view'] = function ($c) {
     $view = new \Slim\Views\Twig(COZCRASHES_BASE . '/templates/', [
@@ -39,3 +40,10 @@ $container['db'] = function ($c) {
 $container['webhook'] = function ($c) {
     return new \CoZCrashes\Webhook($c);
 };
+
+// Slim likes to overwrite this with nothing when starting dispatch
+// so for web accesses we set it again before any real middleware runs
+$app->add(function ($request, $response, $next) {
+    $this->router->setBasePath($this->config['app']['baseUrl']);
+    return $next($request, $response);
+});

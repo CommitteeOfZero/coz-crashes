@@ -70,7 +70,7 @@ class SubmitAction extends \CoZCrashes\Base {
         ];
         if (!empty($params['emailfrom'])) $data['email'] = $params['emailfrom'];
         if (!empty($params['description'])) $data['usercomment'] = $params['description'];
-        $this->c->db->table('reports')->insert($data);
+        $id = $this->c->db->table('reports')->insert($data);
 
         // Save file
         $request->getUploadedFiles()['crashrpt']->moveTo(COZCRASHES_BASE . '/uploads/' . $params['crashguid'] . '.zip');
@@ -79,14 +79,14 @@ class SubmitAction extends \CoZCrashes\Base {
         // First get RVA from DB again...
         $exceptionRvaStr = $this->c->db->table('reports')
             ->select('exception_rva')
-            ->where('guid', '=', $this->c->db->raw('UNHEX(?)', $dbguid))
-            ->first()->exception_rva;
+            ->find($id)
+            ->exception_rva;
         $this->c->webhook->send([
             'embeds' => [
                 [
                     'title' => 'Crash in ' . $params['appname'],
                     'description' => $params['appversion'],
-                    'url' => 'https://example.com',
+                    'url' => $this->c->router->pathFor('adminView', ['id' => $id]),
                     'fields' => [
                         [
                             'name' => 'RVA',
