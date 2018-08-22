@@ -18,7 +18,7 @@ return [
         'storageLimitDays' => 60,
         'maxFileSize' => '80M',
         'discordWebhookUrl' => '',
-        'timestampFormat' => 'F j, Y H:i:s',
+        'timestampFormat' => 'F j, Y H:i:s e',
         'baseUrl' => 'https://base/url'
     ],
     'oauth' => [
