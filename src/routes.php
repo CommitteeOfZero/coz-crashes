@@ -7,6 +7,11 @@ $app->post('/submit', Actions\SubmitAction::class);
 $app->get('/gdpr', Actions\GdprIndexAction::class);
 $app->redirect('/', '/gdpr', 308);
 
+// Destroy report from either public or admin
+$app->post('/destroy', function ($request, $response, $args) {
+    // dummy
+})->setName('destroy');
+
 //
 // admin area
 //
@@ -20,9 +25,7 @@ $app->get('/admin/login', Actions\AdminLoginAction::class)->setName('adminLogin'
 // OAuth process
 $app->any('/admin/authenticate/{provider}', Actions\AdminAuthenticateAction::class)->setName('adminAuthenticate')->add($forUnauthed);
 // Admin index (list all reports)
-$app->get('/admin', function ($request, $response, $args) {
-    // dummy
-})->setName('adminHome')->add($forAuthed);
+$app->get('/admin', Actions\AdminHomeAction::class)->setName('adminHome')->add($forAuthed);
 
 // View report details
 $app->get('/admin/view/{id}', function ($request, $response, $args) {

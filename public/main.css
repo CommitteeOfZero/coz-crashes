@@ -1,0 +1,13 @@
+.table th, .table td {
+    padding: .3rem .6rem;
+}
+
+.report-row[data-has-email="false"] .email-icon {
+    display: none;
+}
+.report-row[data-has-user-comment="false"] .uc-icon {
+    display: none;
+}
+.report-row[data-has-admin-comment="false"] .ac-icon {
+    display: none;
+}

@@ -1,0 +1,20 @@
+<div class="modal fade report-modal" id="modal-destroy" tabindex="-1" role="dialog" aria-labelledby="modal-destroy-label" aria-hidden="true">
+  <form id="modal-destroy-form" action="{{ path_for('destroy') }}" method="POST">
+    <input name="guid" type="hidden" class="modal-guid-input">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-destroy-label">Destroy report</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          Really destroy report <span class="modal-guid-label"></span>? This action is irreversible!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger" id="modal-destroy-button">Destroy</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
