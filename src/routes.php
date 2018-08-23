@@ -1,5 +1,7 @@
 <?php namespace CoZCrashes;
 
+$redirectBack = new Middleware\RedirectBackMiddleware($container);
+
 // CrashSender submit endpoint
 $app->post('/submit', Actions\SubmitAction::class);
 
@@ -8,9 +10,7 @@ $app->get('/gdpr', Actions\GdprIndexAction::class);
 $app->redirect('/', '/gdpr', 308);
 
 // Destroy report from either public or admin
-$app->post('/destroy', function ($request, $response, $args) {
-    // dummy
-})->setName('destroy');
+$app->post('/destroy', Actions\DestroyAction::class)->setName('destroy')->add($redirectBack);
 
 //
 // admin area
