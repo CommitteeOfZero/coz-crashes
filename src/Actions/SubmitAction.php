@@ -73,7 +73,7 @@ class SubmitAction extends \CoZCrashes\Base {
         $id = $this->c->db->table('reports')->insert($data);
 
         // Save file
-        $request->getUploadedFiles()['crashrpt']->moveTo(COZCRASHES_BASE . '/uploads/' . $params['crashguid'] . '.zip');
+        $request->getUploadedFiles()['crashrpt']->moveTo(COZCRASHES_BASE . '/public/uploads/' . $params['crashguid'] . '.zip');
 
         // Post Discord notification
         // First get RVA from DB again...
