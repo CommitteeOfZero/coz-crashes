@@ -34,7 +34,7 @@ class SubmitAction extends \CoZCrashes\Base {
             return $response->withStatus(400)->write(implode($validation->errors()->all(), "\n"));
         }
         // don't have uint64 in php, so keep it a hex string here
-        $dbguid = str_replace('-', '', $params['crashguid']);
+        $dbguid = $this->c->report_util->guid2hex($params['crashguid']);
         // Validate GUID is new
         if ($this->c->db->table('reports')
             ->where('guid', '=', $this->c->db->raw('UNHEX(?)', $dbguid))

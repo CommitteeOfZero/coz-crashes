@@ -43,6 +43,9 @@ $container['webhook'] = function ($c) {
 $container['auth'] = function ($c) {
     return new \CoZCrashes\Auth($c);
 };
+$container['report_util'] = function ($c) {
+    return new \CoZCrashes\ReportUtil($c);
+};
 
 require_once COZCRASHES_BASE . '/src/util.php';
 
