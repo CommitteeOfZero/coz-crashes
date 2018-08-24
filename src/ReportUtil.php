@@ -88,6 +88,7 @@ class ReportUtil extends Base {
 
     public function destroy($id) {
         $guid = $this->convertId($id, 'guid'); // may read from DB, have to get this before deleting record
+        unlink(COZCRASHES_BASE . '/public/uploads/' . $guid . '.zip');
         $this->selectAllIn($id)->delete();
         $this->notifyDestroy($guid);
     }

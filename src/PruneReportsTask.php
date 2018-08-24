@@ -10,5 +10,7 @@ $result = $query->get();
 $query->delete();
 
 foreach ($result as $row) {
-    $this->c->report_util->notifyDestroy($row->hex_guid);
+    $guid = $container->hex2guid($row->hex_guid);
+    unlink(COZCRASHES_BASE . '/public/uploads/' . $guid . '.zip');
+    $container->report_util->notifyDestroy($guid);
 }
