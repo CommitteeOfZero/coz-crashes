@@ -10,7 +10,10 @@ $app->get('/gdpr', Actions\GdprIndexAction::class);
 $app->redirect('/', '/gdpr', 308);
 
 // Destroy report from either public or admin
-$app->post('/destroy', Actions\DestroyAction::class)->setName('destroy')->add($redirectBack);
+$app->post('/destroy', Actions\DestroyAction::class)
+    ->setName('destroy')
+    ->add(new Middleware\WithReportMiddleware($container, 'param', 'guid'))
+    ->add($redirectBack);
 
 //
 // admin area
