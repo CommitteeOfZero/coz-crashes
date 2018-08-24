@@ -18,7 +18,7 @@ class WithReportMiddleware extends \CoZCrashes\Base {
         if ($this->passType == 'param') {
             $id = $request->getParam('id');
         } else if ($this->passType == 'arg') {
-            $id = $request->getAtttribute('route')->getArgument('id');
+            $id = $request->getAttribute('route')->getArgument('id');
         }
 
         $report = null;
