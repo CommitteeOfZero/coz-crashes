@@ -44,10 +44,9 @@ $app->group('', function () use ($container, $redirectBack, $redirectHome) {
         ->add($forAuthed);
 
     // Update admin comment
-    $this->post('/admin/update/{id}', function ($request, $response, $args) {
-        // dummy
-        })->setName('adminUpdate')
+    $this->post('/admin/update/{id}', Actions\AdminUpdateAction::class)->setName('adminUpdate')
         ->add(new Middleware\WithReportMiddleware($container, 'arg'))
+        ->add($redirectBack)
         ->add($forAuthed);
 
     // Destroy report from admin
