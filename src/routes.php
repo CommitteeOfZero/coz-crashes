@@ -7,8 +7,10 @@ $redirectHome = new Middleware\RedirectHomeMiddleware($container);
 $app->post('/submit', Actions\SubmitAction::class);
 
 // Static index page for public report retrieval/deletion
-$app->get('/gdpr', Actions\GdprIndexAction::class)->setName('home');
+$app->get('/gdpr', Actions\HomeAction::class)->setName('home');
 $app->redirect('/', '/gdpr', 308);
+
+$app->post('/gdpr/lookup', Actions\GdprLookupAction::class)->setName('lookup')->add($redirectHome);
 
 // View report details from public
 $app->get('/view/{id}', Actions\ViewAction::class)
@@ -35,7 +37,7 @@ $app->group('', function () use ($container, $redirectBack, $redirectHome) {
     // OAuth process
     $this->any('/admin/authenticate/{provider}', Actions\AdminAuthenticateAction::class)->setName('adminAuthenticate')->add($forUnauthed);
     // Admin index (list all reports)
-    $this->get('/admin', Actions\AdminHomeAction::class)->setName('adminHome')->add($forAuthed);
+    $this->get('/admin', Actions\HomeAction::class)->setName('adminHome')->add($forAuthed);
 
     // View report details
     $this->get('/admin/view/{id}', Actions\ViewAction::class)

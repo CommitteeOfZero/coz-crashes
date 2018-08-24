@@ -1,11 +1,22 @@
 <?php namespace CoZCrashes\Actions;
 
-class AdminHomeAction extends \CoZCrashes\Base {
+class HomeAction extends \CoZCrashes\Base {
     public function __invoke ($request, $response) {
         $data = [];
-        $result = $this->c->report_util->selectAll()
+
+        $query = $this->c->report_util->selectAll();
+
+        $isAdminArea = $request->getAttribute('isAdminArea');
+        if (is_null($isAdminArea) || !$isAdminArea) {
+            $search_hex = [''];
+            if (isset($_SESSION['search_hex'])) $search_hex = $_SESSION['search_hex'];
+            $query = $query->whereIn($this->c->db->raw('HEX(guid)'), $search_hex);
+        }
+
+        $result = $query
             ->orderBy('created_at', 'DESC')
             ->get();
+        $totalReports = count($result);
         foreach ($result as $row) {
             if (!isset($data[$row->product])) $data[$row->product] = [];
             if (!isset($data[$row->product][$row->version])) $data[$row->product][$row->version] = [];
@@ -20,6 +31,9 @@ class AdminHomeAction extends \CoZCrashes\Base {
                 'filesize' => filesizeFormat($row->filesize)
             ];
         }
-        return $this->c->view->render($response, 'admin_home.twig', ['data' => $data]);
+        return $this->c->view->render($response, 'home.twig', [
+            'data' => $data,
+            'totalReports' => $totalReports
+        ]);
     }
 }
