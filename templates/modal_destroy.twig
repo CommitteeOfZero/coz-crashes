@@ -1,5 +1,6 @@
+{% macro modal(new_window) %}
 <div class="modal fade report-modal" id="modal-destroy" tabindex="-1" role="dialog" aria-labelledby="modal-destroy-label" aria-hidden="true">
-  <form id="modal-destroy-form" action="{{ path_for('destroy') }}" method="POST">
+  <form id="modal-destroy-form" action="{{ path_for('destroy') }}" method="POST"{% if new_window %} target="_blank"{% endif %}>
     <input name="id" type="hidden" class="modal-guid-input">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -18,3 +19,4 @@
     </div>
   </form>
 </div>
+{% endmacro %}

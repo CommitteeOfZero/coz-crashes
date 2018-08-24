@@ -1,3 +1,4 @@
+{% import "modal_destroy.twig" as modal_destroy %}
 {% extends 'layout.twig' %}
 {% block title %}CoZ Crash Reports{% endblock %}
 {% block content %}
@@ -43,5 +44,5 @@
   </div>
 {% endblock %}
 {% block modals %}
-  {% include 'modal_destroy.twig' %}
+  {{ modal_destroy.modal(false) }}
 {% endblock %}
