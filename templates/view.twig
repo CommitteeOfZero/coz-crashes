@@ -1,0 +1,61 @@
+{% macro field(label, val) %}
+  <tr>
+    <td class="form-label">{{ label }}</td>
+    <td>
+      {% if val is empty %}
+        <em>n/a</em>
+      {% else %}
+        {{ val }}
+      {% endif %}
+    </td>
+  </tr>
+{% endmacro %}
+{% import _self as macros %}
+
+{% import "modal_destroy.twig" as modal_destroy %}
+{% extends 'layout.twig' %}
+{% block title %}CoZ Crash Reports{% endblock %}
+{% block content %}
+  {% if isAdminArea %}
+  <form action="{{ path_for('adminUpdate', { 'id': report.id }) }}" method="POST">
+  {% endif %}
+  <h3>{{ report.product }} - {{ report.version }}</h3>
+
+  <div class="card">
+    <div class="card-header"><b class="card-title">{{ report.guid }}</b></div>
+
+    <table class="table table-striped">
+      <tbody>
+        {{ macros.field('Date', report.date) }}
+        {{ macros.field('IP', report.ip) }}
+        {{ macros.field('Exception module', report.exceptionModule) }}
+        {{ macros.field('RVA', report.rva) }}
+        {{ macros.field('Email', report.email) }}
+        {{ macros.field('User comment', report.userComment) }}
+        {% if isAdminArea %}
+          <tr>
+            <td class="form-label">Admin comment</td>
+            <td>
+              <textarea name="adminComment">{{ report.adminComment }}</textarea>
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    <div class="card-footer">
+      {% if isAdminArea %}
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&emsp;Save changes</button>
+      {% endif %}
+      <a href="{{ base_url() }}/uploads/{{ report.guid }}.zip" role="button" class="btn btn-primary"><i class="fas fa-file-download"></i>&emsp;Download ({{ report.filesize }})</a>
+      <a href="#" role="button" class="btn btn-danger" data-guid="{{ report.guid }}" data-toggle="modal" data-target="#modal-destroy"><i class="fas fa-trash-alt"></i>&emsp;Delete</a>
+    </div>
+  </div>
+
+  {% if isAdminArea %}
+  </form>
+  {% endif %}
+{% endblock %}
+{% block modals %}
+  {{ modal_destroy.modal( isAdminArea ? 'adminDestroy' : 'destroy', false) }}
+{% endblock %}

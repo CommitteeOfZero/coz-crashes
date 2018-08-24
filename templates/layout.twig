@@ -40,7 +40,11 @@
           <div class="alert alert-info">{{ msg }}</div>
         {% endfor %}
       </p>
-      
+
+      <p>
+        <a href="{{ path_for( isAdminArea ? 'adminHome' : 'home') }}"><i class="fas fa-home"></i>&emsp;Home</a>
+      </p>
+
       {{ block('content') }}
     </div>
 

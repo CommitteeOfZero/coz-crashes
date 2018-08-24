@@ -33,6 +33,8 @@ $container['view'] = function ($c) {
 
     $view->addExtension(new \Knlv\Slim\Views\TwigMessages($c->flash));
 
+    $view->getEnvironment()->addGlobal('isAdminArea', false); // default, overridden in AdminAreaMiddleware
+
     return $view;
 };
 $container['validator'] = function () {

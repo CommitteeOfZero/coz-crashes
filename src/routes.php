@@ -10,6 +10,11 @@ $app->post('/submit', Actions\SubmitAction::class);
 $app->get('/gdpr', Actions\GdprIndexAction::class)->setName('home');
 $app->redirect('/', '/gdpr', 308);
 
+// View report details from public
+$app->get('/view/{id}', Actions\ViewAction::class)
+    ->setName('view')
+    ->add(new Middleware\WithReportMiddleware($container, 'arg', 'guid'));
+
 // Destroy report from public
 $app->post('/destroy', Actions\DestroyAction::class)
     ->setName('destroy')
@@ -33,9 +38,17 @@ $app->group('', function () use ($container, $redirectBack, $redirectHome) {
     $this->get('/admin', Actions\AdminHomeAction::class)->setName('adminHome')->add($forAuthed);
 
     // View report details
-    $this->get('/admin/view/{id}', function ($request, $response, $args) {
+    $this->get('/admin/view/{id}', Actions\ViewAction::class)
+        ->setName('adminView')
+        ->add(new Middleware\WithReportMiddleware($container, 'arg'))
+        ->add($forAuthed);
+
+    // Update admin comment
+    $this->post('/admin/update/{id}', function ($request, $response, $args) {
         // dummy
-    })->setName('adminView')->add($forAuthed);
+        })->setName('adminUpdate')
+        ->add(new Middleware\WithReportMiddleware($container, 'arg'))
+        ->add($forAuthed);
 
     // Destroy report from admin
     $this->post('/admin/destroy', Actions\DestroyAction::class)
