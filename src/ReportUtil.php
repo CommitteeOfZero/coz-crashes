@@ -59,7 +59,7 @@ class ReportUtil extends Base {
             case 'id':
                 if ($requested == 'id') return $id;
                 $row = $this->getFullReport($id);
-                if (is_null($row)) throw new Exception("Report $id not found");
+                if (is_null($row)) throw new \Exception("Report $id not found");
                 if ($requested == 'hex') return $row->hex_guid;
                 if ($requested == 'guid') return $this->hex2guid($row->hex_guid);
                 break;
@@ -74,9 +74,9 @@ class ReportUtil extends Base {
                 if ($requested == 'id') return $this->getFullReport($id)->id;
                 break;
             default:
-                throw new Exception('Invalid report ID.');
+                throw new \Exception('Invalid report ID.');
         }
-        throw new Exception('Invalid target type');
+        throw new \Exception('Invalid target type');
     }
 
     public function notifyDestroy($id) {

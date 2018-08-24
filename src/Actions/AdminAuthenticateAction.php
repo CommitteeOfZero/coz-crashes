@@ -22,7 +22,7 @@ class AdminAuthenticateAction extends \CoZCrashes\Base {
                 ]);
                 // Step 3. (Optional) Look up the user's profile with the provided token
                 $user = $provider->getResourceOwner($token);
-                if (!$this->c->auth->tryLogIn($user->getId())) throw new Exception('Couldn\'t log in.');
+                if (!$this->c->auth->tryLogIn($user->getId())) throw new \Exception('Couldn\'t log in.');
                 $this->c->flash->addMessage('success', 'Logged in.');
                 return $response->withRedirect($this->c->router->pathFor('adminHome'));
             } catch(\Exception $e) {
