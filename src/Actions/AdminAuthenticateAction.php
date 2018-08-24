@@ -2,8 +2,6 @@
 
 class AdminAuthenticateAction extends \CoZCrashes\Base {
     public function __invoke ($request, $response, $args) {
-        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-
         // ignoring args['provider'] as we only support discord
         $provider = new \Wohali\OAuth2\Client\Provider\Discord($this->c->config['oauth']['discord']);
 

@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="{{ base_url() }}/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ base_url() }}/fontawesome/css/all.min.css">
 
+    <link rel="stylesheet" type="text/css" href="{{ base_url() }}/cookieconsent/cookieconsent.min.css" />
+    <script src="{{ base_url() }}/cookieconsent/cookieconsent.min.js"></script>
+    <script>
+      window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": {
+              "background": "#000"
+            },
+            "button": {
+              "background": "#f1d600"
+            }
+          }
+      })});
+    </script>
+
     <link rel="stylesheet" href="{{ base_url() }}/main.css">
 
     <title>{{ block('title') }}</title>
