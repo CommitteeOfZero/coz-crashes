@@ -6,6 +6,7 @@ class DestroyAction extends \CoZCrashes\Base {
         if (is_null($report)) {
             throw new \Slim\Exception\NotFoundException($request, $response);
         }
+        $this->c->flash->addMessage('success', 'Report deleted.');
         $this->c->report_util->destroy($report->id);
         return $response;
     }

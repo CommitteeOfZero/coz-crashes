@@ -29,6 +29,18 @@
   </head>
   <body class="bg-light">
     <div class="container" role="main">
+      <p>
+        {% for msg in flash('error') %}
+          <div class="alert alert-danger">{{ msg }}</div>
+        {% endfor %}
+        {% for msg in flash('success') %}
+          <div class="alert alert-success">{{ msg }}</div>
+        {% endfor %}
+        {% for msg in flash('info') %}
+          <div class="alert alert-info">{{ msg }}</div>
+        {% endfor %}
+      </p>
+      
       {{ block('content') }}
     </div>
 

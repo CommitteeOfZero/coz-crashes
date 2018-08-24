@@ -12,7 +12,8 @@
         "components/jquery": "^3.3",
         "rakit/validation": "^0.18.0",
         "usmanhalalit/pixie": "dev-master",
-        "wohali/oauth2-discord-new": "^1.0"
+        "wohali/oauth2-discord-new": "^1.0",
+        "kanellov/slim-twig-flash": "^0.2.0"
     },
     "autoload": {
         "psr-4": {

@@ -17,6 +17,9 @@ $app = new \Slim\App([
 $container = $app->getContainer();
 $container['config'] = $config;
 $container->router->setBasePath($config['app']['baseUrl']);
+$container['flash'] = function () {
+    return new \Slim\Flash\Messages();
+};
 // Register Twig View helper
 $container['view'] = function ($c) {
     $view = new \Slim\Views\Twig(COZCRASHES_BASE . '/templates/', [
@@ -27,6 +30,8 @@ $container['view'] = function ($c) {
     $router = $c->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+
+    $view->addExtension(new \Knlv\Slim\Views\TwigMessages($c->flash));
 
     return $view;
 };
